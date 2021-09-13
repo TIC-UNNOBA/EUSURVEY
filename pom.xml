@@ -626,6 +626,21 @@
 			<artifactId>camel-ftp</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
+<!-- https://mvnrepository.com/artifact/com.cedarsoft.commons/javafx -->
+<dependency>
+    <groupId>com.cedarsoft.commons</groupId>
+    <artifactId>javafx</artifactId>
+    <version>8.9.2</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.openjfx/javafx -->
+<dependency>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx</artifactId>
+    <version>11</version>
+    <type>pom</type>
+</dependency>
+	
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-core</artifactId>
