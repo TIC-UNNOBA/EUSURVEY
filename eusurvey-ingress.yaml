@@ -1,0 +1,59 @@
+###################################################
+###             IngressRoute HTTP               ###
+###################################################
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: eusurvey-test
+  labels:
+     traefik-instance: both
+     traefik-labelselector: "true"
+spec:
+  entryPoints:
+  - web
+  routes:
+  - kind: Rule
+    match: Host(`eusurvey.test.unnoba.edu.ar`) 
+    middlewares:
+    - name: default-https
+      namespace: traefik
+    services:
+    - name: survey
+      port: 8080
+      
+---
+
+###################################################
+###          IngressRoute SSL - HTTPS           ###
+###################################################
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: eusurvey-test-ssl
+  labels:
+     traefik-instance: both    
+     traefik-labelselector: "true"
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`eusurvey.test.unnoba.edu.ar`)
+    middlewares:
+     name: eusurvey-addprefix
+    services:
+    - name: survey
+      port: 8080
+  tls:
+    secretName: unnoba-tls-test
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: eusurvey-addprefix
+spec:
+  addPrefix:
+    prefix: /eusurvey
+
+---
