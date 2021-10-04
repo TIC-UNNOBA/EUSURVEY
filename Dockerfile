@@ -1,11 +1,11 @@
-FROM maven:3.8.2-openjdk-8 as build
+FROM maven:3.8.2-openjdk-11 as build
 WORKDIR /
 COPY pom.xml /
 COPY src /src
 RUN mvn clean install -DskipTests=true -Denvironment=oss
 
 FROM tomcat:8.5.41-jdk8
-
+#FROM tomcat:8.5.2-jre8
 # arguments
 # ./conf/eulogin.crt is a trusted certificate for SSO integration
 # ./conf/context.xml is the context configuration for tomcat
@@ -18,6 +18,7 @@ FROM tomcat:8.5.41-jdk8
 
 RUN ["rm", "-fr", "/usr/local/tomcat/webapps/ROOT"]
 COPY --from=build /target/eusurvey.war /usr/local/tomcat/webapps/eusurvey.war
+COPY eusurvey.war /usr/local/tomcat/webapps/eusurvey.war
 COPY ./docker/server/conf/setenv.sh /usr/local/tomcat/bin/setenv.sh
 COPY ./docker/server/conf/context.xml /usr/local/tomcat/conf/context.xml
 COPY ./docker/server/conf/manager-context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml

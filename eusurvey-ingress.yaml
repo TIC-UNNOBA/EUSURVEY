@@ -14,14 +14,39 @@ spec:
   routes:
   - kind: Rule
     match: Host(`eusurvey.test.unnoba.edu.ar`)
-#   match: Host(`eusurvey.test.unnoba.edu.ar`) && PathPrefix(`/eusurvey`)
     middlewares:
-    - name: eusurvey-addprefix
     - name: default-https
       namespace: traefik
     services:
     - name: survey
       port: 8080
+
+---
+
+###################################################
+###    IngressRoute SSL - HTTPS - AddPrefix     ###
+###################################################
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: eusurvey-context-test-ssl
+  labels:
+     traefik-instance: both
+     traefik-labelselector: "true"
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`eusurvey.test.unnoba.edu.ar`)
+    middlewares:
+    - name: eusurvey-add-eusurvey
+    services:
+    - name: survey
+      port: 8080
+  tls:
+    secretName: unnoba-tls-test
+
 
 ---
 
@@ -39,29 +64,24 @@ spec:
   entryPoints:
   - websecure
   routes:
-  - kind: Rule
-#    match: Host(`eusurvey.test.unnoba.edu.ar`)
+  - kind: Rule       
     match: Host(`eusurvey.test.unnoba.edu.ar`) && PathPrefix(`/eusurvey`)
-#    middlewares:
-#    - name: eusurvey-addprefix
     services:
     - name: survey
       port: 8080
   tls:
     secretName: unnoba-tls-test
 
-
 ---
 
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: eusurvey-addprefix
   labels:
-     traefik-instance: both
-     traefik-labelselector: "true"
+    traefik-instance: both
+  name: eusurvey-add-eusurvey
 spec:
-  addPrefix:
-    prefix: /eusurvey
-
----
+  redirectRegex:
+    regex: ^https://(.*).unnoba.edu.ar/(.*)
+    replacement: https://${1}.unnoba.edu.ar/eusurvey/${2}
+    permanent: true

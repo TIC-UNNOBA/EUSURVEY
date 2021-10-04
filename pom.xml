@@ -28,6 +28,19 @@
 		<url>https://github.com/EUSurvey/EUsurvey</url>
 	</scm>
 	<dependencies>
+ <dependency>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-controls</artifactId>
+    <version>17</version>
+ </dependency>
+
+<!-- https://mvnrepository.com/artifact/org.mozilla/rhino -->
+<dependency>
+    <groupId>org.mozilla</groupId>
+    <artifactId>rhino</artifactId>
+    <version>1.7.13</version>
+</dependency>
+
 		<dependency>
 			<groupId>org.owasp</groupId>
 			<artifactId>dependency-check-maven</artifactId>
@@ -640,6 +653,19 @@
     <version>11</version>
     <type>pom</type>
 </dependency>
+
+<dependency>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-resources-plugin</artifactId>
+    <version>3.2.0</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
+<dependency>
+    <groupId>org.apache.ant</groupId>
+    <artifactId>ant</artifactId>
+    <version>1.10.9</version>
+</dependency>
+
 	
 		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
