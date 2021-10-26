@@ -28,11 +28,6 @@
 		<url>https://github.com/EUSurvey/EUsurvey</url>
 	</scm>
 	<dependencies>
- <dependency>
-    <groupId>org.openjfx</groupId>
-    <artifactId>javafx-controls</artifactId>
-    <version>17</version>
- </dependency>
 
 <!-- https://mvnrepository.com/artifact/org.mozilla/rhino -->
 <dependency>
